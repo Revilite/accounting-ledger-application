@@ -51,14 +51,22 @@ public class MainScreen {
             switch (mainChoice) {
                 case "1": {
                     try {
-                        AddDeposit.deposit(ledger);
+                        AddToLedger.deposit(ledger);
                     } catch (IOException e) {
                         System.out.println("Unable to deposit information :(");
                     }
                     break;
                 }
                 case "2": {
-                    System.out.println("I havent done that yet!");
+                    try {
+                        AddToLedger.payment(ledger);
+                    } catch (IOException e) {
+                        System.out.println("Unable to add payment :(");
+                    }
+                    break;
+                }
+                case "3": {
+
                 }
                 case "4": {
                     mainLoop = false;
