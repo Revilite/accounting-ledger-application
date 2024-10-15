@@ -1,14 +1,12 @@
 package com.pluralsight.application;
 
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddDeposit {
-    public static void deposit() throws IOException {
+    public static void deposit(ArrayList<Transaction> ledger) throws IOException {
         Scanner scan = new Scanner(System.in);
-        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/transactions.csv", true));
 
         System.out.println("Enter the date of the deposit (yyyy-mm-dd)");
         String date = scan.nextLine();
@@ -19,9 +17,12 @@ public class AddDeposit {
         System.out.println("Enter the provider of the deposit");
         String provider = scan.nextLine();
         System.out.println("Enter the amount of the deposit");
-        String amount = scan.nextLine();
+        float amount = scan.nextFloat();
 
-        buffWrite.write(date + "|" + time + "|" + description + "|" + provider + "|" + amount);
-        buffWrite.close();
+        Transaction deposit = new Transaction(date, time, description, provider, amount);
+        deposit.addToCSV();
+        ledger.add(deposit);
+
+
     }
 }
