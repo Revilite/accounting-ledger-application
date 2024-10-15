@@ -46,6 +46,27 @@ public class Reports {
         }
     }
 
+    public static void yearToDate(ArrayList<Transaction> ledger) {
+        int currentYear = Integer.parseInt(getCurrentDate()[0]);
+
+        for (Transaction transaction : ledger) {
+            int transactionYear = Integer.parseInt(transaction.getDate().split("-")[0]);
+            if (transactionYear == currentYear) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void previousYear(ArrayList<Transaction> ledger) {
+        int currentYear = Integer.parseInt(getCurrentDate()[0]);
+        for(Transaction transaction : ledger){
+            int transactionYear = Integer.parseInt(transaction.getDate().split("-")[0]);
+            if((currentYear - 1) == transactionYear){
+                System.out.println(transaction);
+            }
+        }
+    }
+
     public static void showReports(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
         boolean reportLoop = true;
@@ -70,6 +91,13 @@ public class Reports {
                 case "2": {
                     previousMonth(ledger);
                     break;
+                }
+                case "3": {
+                    yearToDate(ledger);
+                    break;
+                }
+                case "4": {
+                    previousYear(ledger);
                 }
                 case "0": {
                     reportLoop = false;
