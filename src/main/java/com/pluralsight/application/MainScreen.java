@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class MainScreen {
@@ -17,8 +18,9 @@ public class MainScreen {
             Transaction transaction = new Transaction(chunks[0], chunks[1], chunks[2], chunks[3], Float.parseFloat(chunks[4]));
             ledger.add(transaction);
         }
-        System.out.println(ledger);
     }
+
+
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);

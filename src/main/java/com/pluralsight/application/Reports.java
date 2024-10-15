@@ -89,6 +89,7 @@ public class Reports {
                     Year To Date        (3)
                     Previous Year       (4)
                     Search by Vendor    (5)
+                    Custom Search       (6)
                     Go Back             (0)
                     """);
             String reportChoice = scan.nextLine();
@@ -112,6 +113,9 @@ public class Reports {
                     System.out.println("Which vendor are you looking for?");
                     String vendor = scan.nextLine();
                     searchByVendor(ledger, vendor);
+                }
+                case "6": {
+                    CustomSearch.searchingScreen(ledger);
                 }
                 case "0": {
                     reportLoop = false;
