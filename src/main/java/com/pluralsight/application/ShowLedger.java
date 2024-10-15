@@ -10,6 +10,22 @@ public class ShowLedger {
         }
     }
 
+    public static void showDeposits(ArrayList<Transaction> ledger) {
+        for (Transaction transaction : ledger) {
+            if (transaction.getAmount() > 0) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void showPayments(ArrayList<Transaction> ledger) {
+        for (Transaction transaction : ledger) {
+            if (transaction.getAmount() < 0) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
     public static void ledgerPage(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
         boolean ledgerLoop = true;
@@ -18,19 +34,31 @@ public class ShowLedger {
                     
                     Which option would you like to do?
                     
-                    Show All       (1)
-                    Show Deposits  (2)
-                    Show Payments  (3)
-                    Show Reports   (4)
-                    Go Home        (5)
+                    Show All       (A)
+                    Show Deposits  (D)
+                    Show Payments  (P)
+                    Show Reports   (R)
+                    Go Home        (H)
                     """);
-            String ledgerChoice = scan.nextLine();
+            String ledgerChoice = scan.nextLine().toUpperCase();
             switch (ledgerChoice) {
-                case "1": {
+                case "A": {
                     showAll(ledger);
                     break;
                 }
-                case "5": {
+                case "D": {
+                    showDeposits(ledger);
+                    break;
+                }
+                case "P": {
+                    showPayments(ledger);
+                    break;
+                }
+                case "R": {
+
+                    break;
+                }
+                case "H": {
                     ledgerLoop = false;
                     break;
                 }

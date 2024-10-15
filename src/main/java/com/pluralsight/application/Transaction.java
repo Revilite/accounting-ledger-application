@@ -9,9 +9,9 @@ public class Transaction {
     private String time;
     private String description;
     private String provider;
-    private double amount;
+    private float amount;
 
-    public Transaction(String date, String time, String description, String provider, double amount) {
+    public Transaction(String date, String time, String description, String provider, float amount) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -19,11 +19,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -75,7 +75,7 @@ public class Transaction {
         sb.append(time).append("|");
         sb.append(description).append("|");
         sb.append(provider).append("|");
-        sb.append(amount);
+        sb.append(String.format("%.2f", amount));
 
         return sb.toString();
     }

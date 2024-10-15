@@ -41,15 +41,15 @@ public class MainScreen {
             System.out.println("""
                     Which action would you like to  do?
                     
-                    Add Deposit         (1)
-                    Make a Payment      (2)
-                    Ledger              (3)
-                    Exit                (4)
+                    Add Deposit         (D)
+                    Make a Payment      (P)
+                    Ledger              (L)
+                    Exit                (X)
                     """);
-            String mainChoice = scan.nextLine();
+            String mainChoice = scan.nextLine().toUpperCase();
 
             switch (mainChoice) {
-                case "1": {
+                case "D": {
                     try {
                         AddToLedger.deposit(ledger);
                     } catch (IOException e) {
@@ -57,7 +57,7 @@ public class MainScreen {
                     }
                     break;
                 }
-                case "2": {
+                case "P": {
                     try {
                         AddToLedger.payment(ledger);
                     } catch (IOException e) {
@@ -65,11 +65,11 @@ public class MainScreen {
                     }
                     break;
                 }
-                case "3": {
+                case "L": {
                     ShowLedger.ledgerPage(ledger);
                     break;
                 }
-                case "4": {
+                case "X": {
                     mainLoop = false;
                     break;
                 }
