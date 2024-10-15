@@ -6,11 +6,31 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Reports {
-    public static void monthToDate(ArrayList<Transaction> ledger) {
-        //Creates and segments current time and date
-        LocalDateTime currentTime = LocalDateTime.now();
+    public static String[] getCurrentDate() {
+        LocalDateTime currntTime = LocalDateTime.now();
         DateTimeFormatter formattedTime = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String[] currentParts = formattedTime.format(currentTime).split("-");
+        return formattedTime.format(currntTime).split("-");
+    }
+
+
+    public static void monthToDate(ArrayList<Transaction> ledger) {
+        String[] currentParts = getCurrentDate();
+        int currentYear = Integer.parseInt(currentParts[0]);
+        int currentMonth = Integer.parseInt(currentParts[1]);
+        for (Transaction transaction : ledger) {
+            String[] transactionParts = transaction.getDate().split("-");
+            int transactionYear = Integer.parseInt(transactionParts[0]);
+            int transactionMonth = Integer.parseInt(transactionParts[1]);
+
+            if (transactionMonth == currentMonth && transactionYear == currentYear) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void previousMonth(ArrayList<Transaction> ledger) {
+        //Creates and segments current time and date
+        String[] currentParts = getCurrentDate();
         int currentYear = Integer.parseInt(currentParts[0]);
         int currentMonth = Integer.parseInt(currentParts[1]);
 
@@ -45,6 +65,10 @@ public class Reports {
             switch (reportChoice) {
                 case "1": {
                     monthToDate(ledger);
+                    break;
+                }
+                case "2": {
+                    previousMonth(ledger);
                     break;
                 }
                 case "0": {
