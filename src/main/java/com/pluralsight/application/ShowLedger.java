@@ -55,7 +55,7 @@ public class ShowLedger {
                     break;
                 }
                 case "R": {
-
+                    Reports.showReports(ledger);
                     break;
                 }
                 case "H": {
