@@ -30,20 +30,19 @@ public class MainScreen {
         ledger.add(new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
 
         while ((input = buffRead.readLine()) != null) {
-            String[] ledgerChunks = ledger.get(ledger.size() - 1).getDate().split("-");
-            int ledgerDate = Integer.parseInt(ledgerChunks[0] + ledgerChunks[1] + ledgerChunks[2]);
-
             String[] lineChunks = input.split("[|]")[0].split("-");
             int lineDate = Integer.parseInt(lineChunks[0] + lineChunks[1] + lineChunks[2]);
-
+            int index = 0;
             values = input.split("[|]");
-            System.out.println(ledgerDate);
-            System.out.println(lineDate);
-            if (ledgerDate <= lineDate) {
-                ledger.add(new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
-            } else {
-                ledger.add(0, new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
+            for (int i = 0; i < ledger.size(); i++) {
+                String[] ledgerChunks = ledger.get(ledger.size() - 1).getDate().split("-");
+                int ledgerDate = Integer.parseInt(ledgerChunks[0] + ledgerChunks[1] + ledgerChunks[2]);
+                if (lineDate <= ledgerDate) {
+                    index = i;
+
+                }
             }
+            ledger.add(index, new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
         }
         System.out.println(ledger);
     }
