@@ -71,12 +71,12 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "date='" + date + '\'' +
-                ", time='" + time + '\'' +
-                ", description='" + description + '\'' +
-                ", provider='" + provider + '\'' +
-                ", amount=" + amount +
-                '}';
+        StringBuilder sb = new StringBuilder(date).append("|");
+        sb.append(time).append("|");
+        sb.append(description).append("|");
+        sb.append(provider).append("|");
+        sb.append(amount);
+
+        return sb.toString();
     }
 }

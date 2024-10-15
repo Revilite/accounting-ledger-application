@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class MainScreen {
 
     public static void fillLedger(ArrayList<Transaction> ledger) throws IOException {
-        BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/transactions"));
+        BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/transactions.csv"));
         //Skips heading line
         String input = buffRead.readLine();
         while ((input = buffRead.readLine()) != null) {
@@ -23,12 +23,12 @@ public class MainScreen {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         ArrayList<Transaction> ledger = new ArrayList<>();
-
         try {
             fillLedger(ledger);
         } catch (IOException e) {
             System.out.println("Could not fill ledger :(");
         }
+
 
         System.out.println("""
                 ================
@@ -66,7 +66,8 @@ public class MainScreen {
                     break;
                 }
                 case "3": {
-
+                    ShowLedger.ledgerPage(ledger);
+                    break;
                 }
                 case "4": {
                     mainLoop = false;
