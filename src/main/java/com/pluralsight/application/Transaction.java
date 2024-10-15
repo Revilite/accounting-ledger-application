@@ -75,7 +75,7 @@ public class Transaction {
         sb.append(time).append("|");
         sb.append(description).append("|");
         sb.append(provider).append("|");
-        sb.append(String.format("%.2f", amount));
+        sb.append(String.format("%.2f\n", amount));
 
         return sb.toString();
     }

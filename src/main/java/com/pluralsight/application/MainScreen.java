@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class MainScreen {
@@ -20,13 +19,41 @@ public class MainScreen {
         }
     }
 
+    public static void sortLedger(ArrayList<Transaction> ledger) throws IOException {
+        BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/transactions.csv"));
+        ledger.clear();
 
+        //Skips the heading
+        String input = buffRead.readLine();
+        //Adds the first line
+        String[] values = buffRead.readLine().split("[|]");
+        ledger.add(new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
+
+        while ((input = buffRead.readLine()) != null) {
+            String[] ledgerChunks = ledger.get(ledger.size() - 1).getDate().split("-");
+            int ledgerDate = Integer.parseInt(ledgerChunks[0] + ledgerChunks[1] + ledgerChunks[2]);
+
+            String[] lineChunks = input.split("[|]")[0].split("-");
+            int lineDate = Integer.parseInt(lineChunks[0] + lineChunks[1] + lineChunks[2]);
+
+            values = input.split("[|]");
+            System.out.println(ledgerDate);
+            System.out.println(lineDate);
+            if (ledgerDate <= lineDate) {
+                ledger.add(new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
+            } else {
+                ledger.add(0, new Transaction(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])));
+            }
+        }
+        System.out.println(ledger);
+    }
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         ArrayList<Transaction> ledger = new ArrayList<>();
         try {
             fillLedger(ledger);
+            sortLedger(ledger);
         } catch (IOException e) {
             System.out.println("Could not fill ledger :(");
         }
