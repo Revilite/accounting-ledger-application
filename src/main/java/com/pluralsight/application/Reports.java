@@ -67,6 +67,15 @@ public class Reports {
         }
     }
 
+    public static void searchByVendor(ArrayList<Transaction> ledger, String vendor){
+        for(Transaction transaction : ledger){
+            if(transaction.getProvider().equalsIgnoreCase(vendor)){
+                System.out.println(transaction);
+            }
+        }
+
+    }
+
     public static void showReports(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
         boolean reportLoop = true;
@@ -98,6 +107,11 @@ public class Reports {
                 }
                 case "4": {
                     previousYear(ledger);
+                }
+                case "5": {
+                    System.out.println("Which vendor are you looking for?");
+                    String vendor = scan.nextLine();
+                    searchByVendor(ledger, vendor);
                 }
                 case "0": {
                     reportLoop = false;
