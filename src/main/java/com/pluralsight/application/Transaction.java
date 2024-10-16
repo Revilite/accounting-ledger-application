@@ -3,15 +3,18 @@ package com.pluralsight.application;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
-    private String date;
-    private String time;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String provider;
     private float amount;
 
-    public Transaction(String date, String time, String description, String provider, float amount) {
+    public Transaction(LocalDate date, LocalTime time, String description, String provider, float amount) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -23,40 +26,23 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
     public String getProvider() {
         return provider;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public void addToCSV() {
@@ -71,7 +57,8 @@ public class Transaction {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(date).append("|");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        StringBuilder sb = new StringBuilder(dtf.format(date)).append("|");
         sb.append(time).append("|");
         sb.append(description).append("|");
         sb.append(provider).append("|");

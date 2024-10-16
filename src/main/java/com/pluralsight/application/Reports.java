@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class Reports {
     public static String[] getCurrentDate() {
-        LocalDateTime currntTime = LocalDateTime.now();
+        LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formattedTime = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return formattedTime.format(currntTime).split("-");
+        return formattedTime.format(currentTime).split("-");
     }
 
 
@@ -18,12 +18,12 @@ public class Reports {
         int currentYear = Integer.parseInt(currentParts[0]);
         int currentMonth = Integer.parseInt(currentParts[1]);
         for (Transaction transaction : ledger) {
-            String[] transactionParts = transaction.getDate().split("-");
+            String[] transactionParts = transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).split("-");
             int transactionYear = Integer.parseInt(transactionParts[0]);
             int transactionMonth = Integer.parseInt(transactionParts[1]);
 
             if (transactionMonth == currentMonth && transactionYear == currentYear) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
@@ -36,12 +36,12 @@ public class Reports {
 
         //Segments and checks if the transaction was in the last month and in the same year
         for (Transaction transaction : ledger) {
-            String[] transactionParts = transaction.getDate().split("-");
+            String[] transactionParts = transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).split("-");
             int transactionYear = Integer.parseInt(transactionParts[0]);
             int transactionMonth = Integer.parseInt(transactionParts[1]);
 
             if ((currentMonth - 1) == transactionMonth && transactionYear == currentYear) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
@@ -50,27 +50,27 @@ public class Reports {
         int currentYear = Integer.parseInt(getCurrentDate()[0]);
 
         for (Transaction transaction : ledger) {
-            int transactionYear = Integer.parseInt(transaction.getDate().split("-")[0]);
+            int transactionYear = Integer.parseInt(transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).split("-")[0]);
             if (transactionYear == currentYear) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
 
     public static void previousYear(ArrayList<Transaction> ledger) {
         int currentYear = Integer.parseInt(getCurrentDate()[0]);
-        for(Transaction transaction : ledger){
-            int transactionYear = Integer.parseInt(transaction.getDate().split("-")[0]);
-            if((currentYear - 1) == transactionYear){
-                System.out.println(transaction);
+        for (Transaction transaction : ledger) {
+            int transactionYear = Integer.parseInt(transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).split("-")[0]);
+            if ((currentYear - 1) == transactionYear) {
+                System.out.print(transaction);
             }
         }
     }
 
-    public static void searchByVendor(ArrayList<Transaction> ledger, String vendor){
-        for(Transaction transaction : ledger){
-            if(transaction.getProvider().equalsIgnoreCase(vendor)){
-                System.out.println(transaction);
+    public static void searchByVendor(ArrayList<Transaction> ledger, String vendor) {
+        for (Transaction transaction : ledger) {
+            if (transaction.getProvider().equalsIgnoreCase(vendor)) {
+                System.out.print(transaction);
             }
         }
 
@@ -108,14 +108,17 @@ public class Reports {
                 }
                 case "4": {
                     previousYear(ledger);
+                    break;
                 }
                 case "5": {
                     System.out.println("Which vendor are you looking for?");
                     String vendor = scan.nextLine();
                     searchByVendor(ledger, vendor);
+                    break;
                 }
                 case "6": {
                     CustomSearch.searchingScreen(ledger);
+                    break;
                 }
                 case "0": {
                     reportLoop = false;

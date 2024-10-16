@@ -3,6 +3,8 @@ package com.pluralsight.application;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class AddToLedger {
     public static String enterPrompt(String prompt) {
@@ -11,7 +13,7 @@ public class AddToLedger {
         return scan.nextLine();
     }
 
-    public static String enterDate(String prompt) {
+    public static LocalDate enterDate(String prompt) {
         Scanner scan = new Scanner(System.in);
         boolean correctFormat = false;
         while (!correctFormat) {
@@ -36,15 +38,15 @@ public class AddToLedger {
 
              */
             if (userInput.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")) {
-                return userInput;
+                return LocalDate.parse(userInput);
             } else {
                 System.out.println("Incorrect Input");
             }
         }
-        return "";
+        return LocalDate.now();
     }
 
-    public static String enterTime(String prompt) {
+    public static LocalTime enterTime(String prompt) {
         Scanner scan = new Scanner(System.in);
         boolean correctFormat = false;
         while (!correctFormat) {
@@ -66,13 +68,13 @@ public class AddToLedger {
              */
 
             if (userInput.matches("^([01][0-9]|2[0-4])\\:([0-5][0-9])\\:([0-5][0-9])$")) {
-                return userInput;
+                return LocalTime.parse(userInput);
             } else {
                 System.out.println("Incorrect Format");
             }
         }
 
-        return "";
+        return LocalTime.now();
     }
 
     public static float enterAmount(String prompt) {

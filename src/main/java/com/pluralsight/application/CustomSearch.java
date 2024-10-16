@@ -35,23 +35,14 @@ public class CustomSearch {
                 correctFormat = true;
             }
         }
-        int beginningYear = Integer.parseInt(beginningDate.split("-")[0]);
-        int beginningMonth = Integer.parseInt(beginningDate.split("-")[1]);
-        int beginningDay = Integer.parseInt(beginningDate.split("-")[2]);
-
-        int endingYear = Integer.parseInt(endingDate.split("-")[0]);
-        int endingMonth = Integer.parseInt(endingDate.split("-")[1]);
-        int endingDay = Integer.parseInt(endingDate.split("-")[2]);
-
+        Object[] dates = LocalDate.parse(beginningDate).datesUntil(LocalDate.parse(endingDate)).toArray();
         for (Transaction transaction : ledger) {
-            int transactionYear = Integer.parseInt(transaction.getDate().split("-")[0]);
-            int transactionMonth = Integer.parseInt(transaction.getDate().split("-")[1]);
-            int transactionDay = Integer.parseInt(transaction.getDate().split("-")[2]);
-
-
+            for (Object date : dates) {
+                if (transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(date.toString())) {
+                    System.out.print(transaction);
+                }
+            }
         }
-
-
     }
 
 

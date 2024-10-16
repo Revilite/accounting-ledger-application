@@ -6,14 +6,14 @@ import java.util.Scanner;
 public class ShowLedger {
     public static void showAll(ArrayList<Transaction> ledger) {
         for (Transaction transaction : ledger) {
-            System.out.println(transaction);
+            System.out.print(transaction);
         }
     }
 
     public static void showDeposits(ArrayList<Transaction> ledger) {
         for (Transaction transaction : ledger) {
             if (transaction.getAmount() > 0) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
@@ -21,7 +21,7 @@ public class ShowLedger {
     public static void showPayments(ArrayList<Transaction> ledger) {
         for (Transaction transaction : ledger) {
             if (transaction.getAmount() < 0) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
