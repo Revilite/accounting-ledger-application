@@ -3,7 +3,6 @@ package com.pluralsight.application;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CustomSearch {
@@ -24,6 +23,7 @@ public class CustomSearch {
         String beginningDate = "";
         String endingDate = "";
         boolean correctFormat = false;
+        //Collects dates from user and regex checks if it's a valid date
         while (!correctFormat) {
             System.out.println("Enter the beginning date (yyyy-mm-dd)");
             beginningDate = scan.nextLine();
@@ -36,6 +36,7 @@ public class CustomSearch {
                 correctFormat = true;
             }
         }
+        //Gets a range of dates then searches for a transaction date between the two user dates
         Object[] dates = LocalDate.parse(beginningDate).datesUntil(LocalDate.parse(endingDate)).toArray();
         for (Transaction transaction : ledger) {
             for (Object date : dates) {
@@ -51,15 +52,17 @@ public class CustomSearch {
         System.out.println("What is the amount you would like to search for?");
         String amount = scan.nextLine();
 
+        //Checks to see if user input is a float
         float amountFloat = 0.0f;
-        try{
-           amountFloat =  Float.parseFloat(amount);
+        try {
+            amountFloat = Float.parseFloat(amount);
         } catch (NumberFormatException e) {
             System.out.println("That is not a number");
         }
 
-        for(Transaction transaction : ledger){
-            if(Math.abs(transaction.getAmount()) <= amountFloat){
+        //searches transactions for an amount smaller than the user input
+        for (Transaction transaction : ledger) {
+            if (Math.abs(transaction.getAmount()) <= amountFloat) {
                 System.out.print(transaction);
             }
         }

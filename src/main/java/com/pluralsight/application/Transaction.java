@@ -30,21 +30,14 @@ public class Transaction {
         return provider;
     }
 
-
     public String getDescription() {
         return description;
     }
 
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-
     public LocalDate getDate() {
         return date;
     }
-
+    //Adds the all elements to the transactions CSV file
     public void addToCSV() {
         try {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/transactions.csv", true));

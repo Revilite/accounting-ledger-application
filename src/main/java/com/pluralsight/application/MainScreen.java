@@ -14,6 +14,7 @@ public class MainScreen {
         BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/transactions.csv"));
         //Skips heading line
         String input = buffRead.readLine();
+        //Reads and adds info from csv file to ledger ArrayList
         while ((input = buffRead.readLine()) != null) {
             String[] chunks = input.split("[|]");
             Transaction transaction = new Transaction(LocalDate.parse(chunks[0]), LocalTime.parse(chunks[1]), chunks[2], chunks[3], Float.parseFloat(chunks[4]));
