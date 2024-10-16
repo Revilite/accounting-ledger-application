@@ -11,13 +11,12 @@ public class AddToLedger {
     public static String enterPrompt(String prompt) {
         Scanner scan = new Scanner(System.in);
         System.out.println(prompt);
-        return scan.nextLine();
+        return scan.nextLine().trim();
     }
 
     //Same as enterPrompt but returns a formatted float variable
     public static float enterAmount(String prompt) {
         Scanner scan = new Scanner(System.in);
-
 
         boolean correctFormat = false;
         while (!correctFormat) {
@@ -46,7 +45,7 @@ public class AddToLedger {
         String amount = "Enter the amount of the deposit";
         Transaction deposit = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), enterAmount(amount));
         deposit.addToCSV();
-        ledger.add(deposit);
+        ledger.add(0, deposit);
     }
 
     //Gets called when adding a payment
@@ -56,6 +55,6 @@ public class AddToLedger {
         String amount = "Enter the amount of the payment (do not put '-')";
         Transaction payment = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), -enterAmount(amount));
         payment.addToCSV();
-        ledger.add(payment);
+        ledger.add(0, payment);
     }
 }

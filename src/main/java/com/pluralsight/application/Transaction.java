@@ -51,7 +51,6 @@ public class Transaction {
         }
     }
 
-
     @Override
     public String toString() {
         DateTimeFormatter formattedCurrentDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -18,7 +18,7 @@ public class MainScreen {
         while ((input = buffRead.readLine()) != null) {
             String[] chunks = input.split("[|]");
             Transaction transaction = new Transaction(LocalDate.parse(chunks[0]), LocalTime.parse(chunks[1]), chunks[2], chunks[3], Float.parseFloat(chunks[4]));
-            ledger.add(transaction);
+            ledger.add(0, transaction);
         }
     }
 
@@ -31,7 +31,6 @@ public class MainScreen {
         } catch (IOException e) {
             System.out.println("Could not fill ledger :(");
         }
-
 
         System.out.println("""
                 ================

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Implement Predicate
 public class CustomSearch {
 
     public static void searchBySelectedDate(ArrayList<Transaction> ledger) {
@@ -41,6 +42,7 @@ public class CustomSearch {
             }
         }
     }
+
     public static void searchByDescription(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
 
@@ -72,7 +74,52 @@ public class CustomSearch {
                 System.out.print(transaction);
             }
         }
+    }
 
+
+    public static String prompt(String prompt) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println(prompt);
+        String userInput = scan.nextLine();
+
+        if (userInput.isEmpty()) {
+            return null;
+        }
+        return userInput;
+    }
+
+
+    public static void searchByMultipleValues(ArrayList<Transaction> ledger) {
+        String startDate = prompt("What is the start date?");
+        String endDate = prompt("What is the end date?");
+        String description = prompt("What is the description?");
+        String vendor = prompt("What is the vendor?");
+
+        boolean notFloat = true;
+        float amountFloat = 0.0f;
+        while (notFloat) {
+            String amount = prompt("What is the amount?");
+            if (amount == null) {
+                amountFloat = 0.0f;
+                break;
+            }
+            try {
+                amountFloat = Float.parseFloat(amount);
+                notFloat = false;
+            } catch (NumberFormatException e) {
+                System.out.println("That is not a number");
+            }
+        }
+        //Variable has to be final
+        final float finalAmount = amountFloat;
+
+        ledger.stream()
+                .filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate)))
+                .filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate)))
+                .filter(t -> description == null || t.getDescription().equals(description))
+                .filter(t -> vendor == null || t.getProvider().equals(vendor))
+                .filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount )
+                .forEach(t -> System.out.print(t));
 
     }
 
@@ -85,6 +132,7 @@ public class CustomSearch {
                 Selected Date   (1)
                 Description     (2)
                 Amount          (3)
+                Multiple        (4)
                 Go Back         (0)
                 """);
         String searchingChoice = scan.nextLine();
@@ -99,6 +147,10 @@ public class CustomSearch {
             }
             case "3": {
                 searchAmount(ledger);
+                break;
+            }
+            case "4": {
+                searchByMultipleValues(ledger);
                 break;
             }
             case "0": {
