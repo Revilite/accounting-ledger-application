@@ -3,6 +3,7 @@ package com.pluralsight.application;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CustomSearch {
@@ -45,6 +46,27 @@ public class CustomSearch {
         }
     }
 
+    public static void searchAmount(ArrayList<Transaction> ledger) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the amount you would like to search for?");
+        String amount = scan.nextLine();
+
+        float amountFloat = 0.0f;
+        try{
+           amountFloat =  Float.parseFloat(amount);
+        } catch (NumberFormatException e) {
+            System.out.println("That is not a number");
+        }
+
+        for(Transaction transaction : ledger){
+            if(Math.abs(transaction.getAmount()) <= amountFloat){
+                System.out.print(transaction);
+            }
+        }
+
+
+    }
+
 
     public static void searchingScreen(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
@@ -67,6 +89,7 @@ public class CustomSearch {
                 break;
             }
             case "3": {
+                searchAmount(ledger);
                 break;
             }
             case "0": {
