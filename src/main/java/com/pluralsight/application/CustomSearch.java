@@ -6,17 +6,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomSearch {
-    public static void searchByDescription(ArrayList<Transaction> ledger) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("What is the description of transaction?");
-        String userInput = scan.nextLine();
-        for (Transaction transaction : ledger) {
-            if (transaction.getDescription().equalsIgnoreCase(userInput)) {
-                System.out.println(transaction);
-            }
-        }
-    }
 
     public static void searchBySelectedDate(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
@@ -43,6 +32,23 @@ public class CustomSearch {
                 if (transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(date.toString())) {
                     System.out.print(transaction);
                 }
+            }
+            //Checks if the beginning and the ending date are the same and only search for that one day
+            if (beginningDate.equals(endingDate)) {
+                if (transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(beginningDate)) {
+                    System.out.print(transaction);
+                }
+            }
+        }
+    }
+    public static void searchByDescription(ArrayList<Transaction> ledger) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("What is the description of transaction?");
+        String userInput = scan.nextLine();
+        for (Transaction transaction : ledger) {
+            if (transaction.getDescription().equalsIgnoreCase(userInput)) {
+                System.out.println(transaction);
             }
         }
     }

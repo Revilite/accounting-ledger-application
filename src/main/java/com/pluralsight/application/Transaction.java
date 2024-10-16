@@ -37,26 +37,38 @@ public class Transaction {
     public LocalDate getDate() {
         return date;
     }
+
     //Adds the all elements to the transactions CSV file
     public void addToCSV() {
+        //Used to format time, date does not need it
+        DateTimeFormatter formattedCurrentTime = DateTimeFormatter.ofPattern("hh:mm:ss");
         try {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/transactions.csv", true));
-            buffWrite.write(String.format("\n%s|%s|%s|%s|%.2f", date, time, description, provider, amount));
+            buffWrite.write(String.format("\n%s|%s|%s|%s|%.2f", date, formattedCurrentTime.format(time), description, provider, amount));
             buffWrite.close();
         } catch (IOException e) {
             System.out.println("Could not add transaction :(");
         }
     }
 
+
     @Override
     public String toString() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        StringBuilder sb = new StringBuilder(dtf.format(date)).append("|");
-        sb.append(time).append("|");
+        DateTimeFormatter formattedCurrentDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formattedCurrentTime = DateTimeFormatter.ofPattern("hh:mm:ss");
+
+        StringBuilder sb = new StringBuilder(formattedCurrentDate.format(date)).append("|");
+        sb.append(formattedCurrentTime.format(time)).append("|");
         sb.append(description).append("|");
         sb.append(provider).append("|");
-        sb.append(String.format("%.2f\n", amount));
 
+        //Print in red if the amount is negative
+        if (amount < 0) {
+            sb.append(String.format("\u001B[31m%.2f\u001B[0m\n", amount));
+        }
+        else{
+            sb.append(String.format("\u001B[32m%.2f\u001B[0m\n", amount));
+        }
         return sb.toString();
     }
 }

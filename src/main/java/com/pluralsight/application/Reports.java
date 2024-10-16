@@ -72,7 +72,6 @@ public class Reports {
     public static void previousYear(ArrayList<Transaction> ledger) {
         int currentYear = Integer.parseInt(getCurrentDate()[0]);
 
-        //Searches everything in the previous year
         for (Transaction transaction : ledger) {
             int transactionYear = Integer.parseInt(transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).split("-")[0]);
             if ((currentYear - 1) == transactionYear) {
@@ -81,7 +80,10 @@ public class Reports {
         }
     }
 
-    public static void searchByVendor(ArrayList<Transaction> ledger, String vendor) {
+    public static void searchByVendor(ArrayList<Transaction> ledger) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Which vendor are you looking for?");
+        String vendor = scan.nextLine();
         for (Transaction transaction : ledger) {
             if (transaction.getProvider().equalsIgnoreCase(vendor)) {
                 System.out.print(transaction);
@@ -124,9 +126,7 @@ public class Reports {
                     break;
                 }
                 case "5": {
-                    System.out.println("Which vendor are you looking for?");
-                    String vendor = scan.nextLine();
-                    searchByVendor(ledger, vendor);
+                    searchByVendor(ledger);
                     break;
                 }
                 case "6": {
