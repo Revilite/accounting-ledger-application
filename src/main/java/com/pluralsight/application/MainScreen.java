@@ -34,9 +34,9 @@ public class MainScreen {
         }
 
         System.out.println("""
-                ================
-                    Welcome!
-                ================
+                  |================|
+                  |    Welcome!    |
+                  |================|
                 """);
         boolean mainLoop = true;
 

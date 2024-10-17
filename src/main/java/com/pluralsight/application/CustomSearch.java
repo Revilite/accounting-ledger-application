@@ -28,7 +28,7 @@ public class CustomSearch {
                 System.out.println("Incorrect format");
             }
         }
-        //Searches dates and if beginning and ending date are the same look for only one date
+        //Searches dates (exclusive) and if beginning and ending date  are the same look for only one date
         for (Transaction transaction : ledger) {
             if (transaction.getDate().isAfter(beginningDate) && transaction.getDate().isBefore(endingDate)) {
                 System.out.print(transaction);
@@ -49,7 +49,7 @@ public class CustomSearch {
         String userInput = scan.nextLine();
         for (Transaction transaction : ledger) {
             if (transaction.getDescription().equalsIgnoreCase(userInput)) {
-                System.out.println(transaction);
+                System.out.print(transaction);
             }
         }
     }
@@ -126,8 +126,10 @@ public class CustomSearch {
     public static void searchingScreen(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
         System.out.println("""
-                What would you like to search by?
-                
+                    |======================|
+                    |    Custom Search     |
+                    |======================|
+               
                 Selected Date   (1)
                 Description     (2)
                 Amount          (3)

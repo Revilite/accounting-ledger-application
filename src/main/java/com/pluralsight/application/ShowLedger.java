@@ -31,8 +31,9 @@ public class ShowLedger {
         boolean ledgerLoop = true;
         while (ledgerLoop) {
             System.out.println("""
-                    
-                    Which option would you like to do?
+                        |===========| 
+                        |  Ledger   |
+                        |===========|
                     
                     Show All       (A)
                     Show Deposits  (D)

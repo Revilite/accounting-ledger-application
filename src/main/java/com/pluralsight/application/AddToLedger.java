@@ -46,6 +46,7 @@ public class AddToLedger {
         Transaction deposit = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), enterAmount(amount));
         deposit.addToCSV();
         ledger.add(0, deposit);
+        System.out.println("Successfully added deposit!");
     }
 
     //Gets called when adding a payment
@@ -56,5 +57,6 @@ public class AddToLedger {
         Transaction payment = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), -enterAmount(amount));
         payment.addToCSV();
         ledger.add(0, payment);
+        System.out.println("Successfully added payment!");
     }
 }

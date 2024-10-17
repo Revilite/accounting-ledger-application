@@ -65,7 +65,9 @@ public class Reports {
 
         while (reportLoop) {
             System.out.println("""
-                    How would you like to search?
+                        |===============|
+                        |    Reports    |
+                        |===============|
                     
                     Month to Date       (1)
                     Previous Month      (2)
