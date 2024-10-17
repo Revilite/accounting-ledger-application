@@ -1,47 +1,46 @@
 package com.pluralsight.application;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 //Implement Predicate
+
 public class CustomSearch {
 
     public static void searchBySelectedDate(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
-        String beginningDate = "";
-        String endingDate = "";
+        LocalDate beginningDate = LocalDate.now();
+        LocalDate endingDate = LocalDate.now();
         boolean correctFormat = false;
         //Collects dates from user and regex checks if it's a valid date
         while (!correctFormat) {
             System.out.println("Enter the beginning date (yyyy-mm-dd)");
-            beginningDate = scan.nextLine();
+            String userBeginningDate = scan.nextLine();
             System.out.println("Enter the ending date (yyyy-mm-dd)");
-            endingDate = scan.nextLine();
-            //Please refer to AddToLedger.enterDate() for explanation on regex
-            if (!beginningDate.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$") || !endingDate.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")) {
-                System.out.println("Incorrect Format");
-            } else {
+            String userEndingDate = scan.nextLine();
+            try {
+                beginningDate = LocalDate.parse(userBeginningDate);
+                endingDate = LocalDate.parse(userEndingDate);
                 correctFormat = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Incorrect format");
             }
         }
-        //Gets a range of dates then searches for a transaction date between the two user dates
-        Object[] dates = LocalDate.parse(beginningDate).datesUntil(LocalDate.parse(endingDate)).toArray();
+
         for (Transaction transaction : ledger) {
-            for (Object date : dates) {
-                if (transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(date.toString())) {
-                    System.out.print(transaction);
-                }
-            }
-            //Checks if the beginning and the ending date are the same and only search for that one day
-            if (beginningDate.equals(endingDate)) {
-                if (transaction.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(beginningDate)) {
+            if (transaction.getDate().isAfter(beginningDate) && transaction.getDate().isBefore(endingDate)) {
+                System.out.print(transaction);
+            } else if (beginningDate.equals(endingDate)) {
+                if (transaction.getDate().equals(beginningDate)) {
                     System.out.print(transaction);
                 }
             }
         }
+
     }
+
 
     public static void searchByDescription(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
@@ -113,13 +112,7 @@ public class CustomSearch {
         //Variable has to be final
         final float finalAmount = amountFloat;
 
-        ledger.stream()
-                .filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate)))
-                .filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate)))
-                .filter(t -> description == null || t.getDescription().equals(description))
-                .filter(t -> vendor == null || t.getProvider().equals(vendor))
-                .filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount )
-                .forEach(t -> System.out.print(t));
+        ledger.stream().filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate))).filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate))).filter(t -> description == null || t.getDescription().equals(description)).filter(t -> vendor == null || t.getProvider().equals(vendor)).filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount).forEach(t -> System.out.print(t));
 
     }
 

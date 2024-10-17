@@ -12,6 +12,7 @@ public class MainScreen {
 
     public static void fillLedger(ArrayList<Transaction> ledger) throws IOException {
         BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/transactions.csv"));
+
         //Skips heading line
         String input = buffRead.readLine();
         //Reads and adds info from csv file to ledger ArrayList
