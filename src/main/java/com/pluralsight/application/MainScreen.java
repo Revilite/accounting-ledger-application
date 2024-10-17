@@ -19,8 +19,10 @@ public class MainScreen {
         while ((input = buffRead.readLine()) != null) {
             String[] chunks = input.split("[|]");
             Transaction transaction = new Transaction(LocalDate.parse(chunks[0]), LocalTime.parse(chunks[1]), chunks[2], chunks[3], Float.parseFloat(chunks[4]));
-            ledger.add(0, transaction);
+            ledger.add(transaction);
         }
+        //Sorts using a Comparing Interface lambda expression
+        ledger.sort((t1, t2) -> t2.getDate().compareTo(t1.getDate()));
     }
 
 

@@ -50,8 +50,11 @@ public class Reports {
 
     public static void searchByVendor(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Which vendor are you looking for?");
+        System.out.println("Which vendor are you looking for? (enter x to exit)");
         String vendor = scan.nextLine();
+        if(vendor.toLowerCase().equals("x")){
+            return;
+        }
         for (Transaction transaction : ledger) {
             if (transaction.getProvider().equalsIgnoreCase(vendor)) {
                 System.out.print(transaction);

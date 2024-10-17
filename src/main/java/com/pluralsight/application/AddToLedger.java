@@ -11,7 +11,11 @@ public class AddToLedger {
     public static String enterPrompt(String prompt) {
         Scanner scan = new Scanner(System.in);
         System.out.println(prompt);
-        return scan.nextLine().trim();
+        String userInput = scan.nextLine().trim();
+        if (userInput.toLowerCase().equals("x")) {
+            return "";
+        }
+        return userInput;
     }
 
     //Same as enterPrompt but returns a formatted float variable
@@ -24,7 +28,9 @@ public class AddToLedger {
                 System.out.println(prompt);
                 String userInput = scan.nextLine();
                 float updatedUserInput = Float.parseFloat(userInput);
-                if (updatedUserInput <= 0) {
+                if (userInput.isEmpty()) {
+                    return 0.0f;
+                } else if (updatedUserInput <= 0) {
                     System.out.println("Please enter a number higher than 0");
                 } else {
                     return updatedUserInput;
@@ -39,11 +45,22 @@ public class AddToLedger {
 
     //Gets called when adding a deposit
     public static void deposit(ArrayList<Transaction> ledger) throws IOException {
-
-        String description = "Enter the description of the deposit";
-        String provider = "Enter the provider of the deposit";
-        String amount = "Enter the amount of the deposit";
-        Transaction deposit = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), enterAmount(amount));
+        String descriptionPrompt = "Enter the description of the deposit (Enter 'x' to exit )";
+        String providerPrompt = "Enter the provider of the deposit (Enter 'x' to exit )";
+        String amountPrompt = "Enter the amount of the deposit (Enter 'x' to exit )";
+        String description = enterPrompt(descriptionPrompt);
+        if (description.isEmpty()) {
+            return;
+        }
+        String provider = enterPrompt(providerPrompt);
+        if (provider.isEmpty()) {
+            return;
+        }
+        float amount = enterAmount(amountPrompt);
+        if (amount == 0.0f) {
+            return;
+        }
+        Transaction deposit = new Transaction(LocalDate.now(), LocalTime.now(), description, provider, amount);
         deposit.addToCSV();
         ledger.add(0, deposit);
         System.out.println("Successfully added deposit!");
@@ -51,10 +68,26 @@ public class AddToLedger {
 
     //Gets called when adding a payment
     public static void payment(ArrayList<Transaction> ledger) throws IOException {
-        String description = "Enter the description of the payment";
-        String provider = "Enter the provider of the payment";
-        String amount = "Enter the amount of the payment (do not put '-')";
-        Transaction payment = new Transaction(LocalDate.now(), LocalTime.now(), enterPrompt(description), enterPrompt(provider), -enterAmount(amount));
+        String descriptionPrompt = "Enter the description of the deposit (Enter 'x' to exit )";
+        String providerPrompt = "Enter the provider of the deposit (Enter 'x' to exit )";
+        String amountPrompt = "Enter the amount of the deposit (Enter 'x' to exit )";
+        String description = enterPrompt(descriptionPrompt);
+        if (description.isEmpty()) {
+            return;
+        }
+        String provider = enterPrompt(providerPrompt);
+        if (provider.isEmpty()) {
+            return;
+        }
+        float amount = enterAmount(amountPrompt);
+        if (amount == 0.0f) {
+            return;
+        }
+        Transaction payment = new Transaction(LocalDate.now(), LocalTime.now(), description, provider, -amount);
+        if (payment.getDescription().isEmpty() || payment.getProvider().isEmpty() || payment.getAmount() == 0) {
+            System.out.println("Exiting");
+            return;
+        }
         payment.addToCSV();
         ledger.add(0, payment);
         System.out.println("Successfully added payment!");

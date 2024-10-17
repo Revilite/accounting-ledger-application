@@ -16,10 +16,16 @@ public class CustomSearch {
         boolean correctFormat = false;
         //Collects dates from user and regex checks if it's a valid date
         while (!correctFormat) {
-            System.out.println("Enter the beginning date (yyyy-mm-dd)");
+            System.out.println("Enter the beginning date (yyyy-mm-dd) (enter 'x' to exit)");
             String userBeginningDate = scan.nextLine();
-            System.out.println("Enter the ending date (yyyy-mm-dd)");
+            if (userBeginningDate.toLowerCase().equals("x")) {
+                return;
+            }
+            System.out.println("Enter the ending date (yyyy-mm-dd) (enter 'x' to exit");
             String userEndingDate = scan.nextLine();
+            if (userEndingDate.toLowerCase().equals("x")) {
+                return;
+            }
             try {
                 beginningDate = LocalDate.parse(userBeginningDate);
                 endingDate = LocalDate.parse(userEndingDate);
@@ -45,8 +51,11 @@ public class CustomSearch {
     public static void searchByDescription(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("What is the description of transaction?");
+        System.out.println("What is the description of transaction? (enter 'x' to exit");
         String userInput = scan.nextLine();
+        if (userInput.toLowerCase().equals("x")) {
+            return;
+        }
         for (Transaction transaction : ledger) {
             if (transaction.getDescription().equalsIgnoreCase(userInput)) {
                 System.out.print(transaction);
@@ -56,8 +65,11 @@ public class CustomSearch {
 
     public static void searchAmount(ArrayList<Transaction> ledger) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("What is the amount you would like to search for?");
+        System.out.println("What is the amount you would like to search for? (enter 'x' to exit");
         String amount = scan.nextLine();
+        if (amount.toLowerCase().equals("x")) {
+            return;
+        }
 
         //Checks to see if user input is a float
         float amountFloat = 0.0f;
@@ -81,6 +93,9 @@ public class CustomSearch {
         System.out.println(prompt);
         String userInput = scan.nextLine();
 
+        if (userInput.toLowerCase().equals("x")) {
+            return "";
+        }
         if (userInput.isEmpty()) {
             return null;
         }
@@ -89,15 +104,27 @@ public class CustomSearch {
 
 
     public static void searchByMultipleValues(ArrayList<Transaction> ledger) {
-        String startDate = prompt("What is the start date?");
-        String endDate = prompt("What is the end date?");
-        String description = prompt("What is the description?");
-        String vendor = prompt("What is the vendor?");
+        String startDate = prompt("What is the start date? (enter 'x' to exit");
+        if (startDate.isEmpty()) {
+            return;
+        }
+        String endDate = prompt("What is the end date? (enter 'x' to exit");
+        if (endDate.isEmpty()) {
+            return;
+        }
+        String description = prompt("What is the description? (enter 'x' to exit");
+        if (description.isEmpty()) {
+            return;
+        }
+        String vendor = prompt("What is the vendor? (enter 'x' to exit");
+        if (vendor.isEmpty()) {
+            return;
+        }
 
         boolean notFloat = true;
         float amountFloat = 0.0f;
         while (notFloat) {
-            String amount = prompt("What is the amount?");
+            String amount = prompt("What is the amount? (enter 'x' to exit");
             if (amount == null) {
                 amountFloat = 0.0f;
                 break;
@@ -111,12 +138,11 @@ public class CustomSearch {
         }
         //Variable has to be final
         final float finalAmount = amountFloat;
-
-        ledger.stream()
-                .filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate)))
+        //Pure Magic
+        ledger.stream().filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate)))
                 .filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate)))
-                .filter(t -> description == null || t.getDescription().equals(description))
-                .filter(t -> vendor == null || t.getProvider().equals(vendor))
+                .filter(t -> description == null || t.getDescription().contains(description))
+                .filter(t -> vendor == null || t.getProvider().contains(vendor))
                 .filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount)
                 .forEach(t -> System.out.print(t));
 
@@ -129,7 +155,7 @@ public class CustomSearch {
                     |======================|
                     |    Custom Search     |
                     |======================|
-               
+                
                 Selected Date   (1)
                 Description     (2)
                 Amount          (3)

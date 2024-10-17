@@ -37,6 +37,9 @@ public class Transaction {
     public LocalDate getDate() {
         return date;
     }
+    public LocalTime getTime() {
+        return time;
+    }
 
     //Adds the all elements to the transactions CSV file
     public void addToCSV() {
