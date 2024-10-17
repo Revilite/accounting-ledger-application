@@ -28,7 +28,7 @@ public class CustomSearch {
                 System.out.println("Incorrect format");
             }
         }
-
+        //Searches dates and if beginning and ending date are the same look for only one date
         for (Transaction transaction : ledger) {
             if (transaction.getDate().isAfter(beginningDate) && transaction.getDate().isBefore(endingDate)) {
                 System.out.print(transaction);
@@ -112,7 +112,13 @@ public class CustomSearch {
         //Variable has to be final
         final float finalAmount = amountFloat;
 
-        ledger.stream().filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate))).filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate))).filter(t -> description == null || t.getDescription().equals(description)).filter(t -> vendor == null || t.getProvider().equals(vendor)).filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount).forEach(t -> System.out.print(t));
+        ledger.stream()
+                .filter(t -> startDate == null || t.getDate().isAfter(LocalDate.parse(startDate)))
+                .filter(t -> endDate == null || t.getDate().isBefore(LocalDate.parse(endDate)))
+                .filter(t -> description == null || t.getDescription().equals(description))
+                .filter(t -> vendor == null || t.getProvider().equals(vendor))
+                .filter(t -> finalAmount == 0.0f || t.getAmount() <= finalAmount)
+                .forEach(t -> System.out.print(t));
 
     }
 
