@@ -105,19 +105,19 @@ public class CustomSearch {
 
     public static void searchByMultipleValues(ArrayList<Transaction> ledger) {
         String startDate = prompt("What is the start date? (enter 'x' to exit");
-        if (startDate.isEmpty()) {
+        if (startDate != null && startDate.isEmpty()) {
             return;
         }
         String endDate = prompt("What is the end date? (enter 'x' to exit");
-        if (endDate.isEmpty()) {
+        if (endDate != null && endDate.isEmpty()) {
             return;
         }
         String description = prompt("What is the description? (enter 'x' to exit");
-        if (description.isEmpty()) {
+        if (description != null && description.isEmpty()) {
             return;
         }
         String vendor = prompt("What is the vendor? (enter 'x' to exit");
-        if (vendor.isEmpty()) {
+        if (vendor != null && vendor.isEmpty()) {
             return;
         }
 
